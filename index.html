@@ -21,7 +21,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- <link rel="canonical" href="https://weather-pwa-sample.firebaseapp.com/final/"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Convert My Unit</title>
+  <title>Unitard</title>
   <link rel="stylesheet" type="text/css" href="styles/inline.css">
 
   <!-- TODO add manifest here -->
@@ -38,17 +38,22 @@
         body {
             font-size: 1em;
         }
+		
+		h1 { 
+			font-size: 0.9em;
+			margin: 5px;
+		}
 
         .main {
-            margin-top: 40px;
+            margin-top: 50px;
             padding: 20px;
         }
 
         input, option, select {
             padding: 10px;            
-            margin: 10px; 
+            margin: 5px; 
             width: 80vw;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
     </style>
@@ -56,15 +61,19 @@
 <body>
 
   <header class="header">
-    <h1 class="header__title">Unitard</h1>
+    <h1 class="header__title">
+		<img src="images/icons/icon-32x32.png" />
+		<span style="display: block; margin-top: -32px; margin-left: 40px;">Unitard</span>
+	</h1>
     <button id="butRefresh" class="headerButton" aria-label="Refresh"></button>
     <button id="butAdd" class="headerButton" aria-label="Add"></button>
   </header>
 
   <main class="main">
+	
       <h1>Amount</h1>
-      <input type="text" name="amount" class="amount" />
-      <h2>From</h2>
+      <input type="number" name="amount" class="amount" />
+      <h1>From</h1>
       <select class="unitselector from">
           <optgroup label="Weight">
               <option value="lb">lb (pounds)</option>
@@ -84,7 +93,7 @@
               <option value="mm">mm (milimetres)</option>
           </optgroup>
       </select>     
-      <h2>To</h2>
+      <h1>To</h1>
       <select class="unitselector to">
           <optgroup label="Weight">
               <option value="kg">kg (kilograms)</option>
@@ -142,8 +151,8 @@
             // set vars, load defaults of vars
             window.from = localStorage.getItem('from') || $($(".from option")[0]).val();
             window.to = localStorage.getItem('to') || $($(".to option")[0]).val();
-            window.lastAmount = localStorage.getItem('lastAmount') || 0;
-            window.lastConverted = localStorage.getItem('lastConverted') || "0 " + window.to;
+            window.lastAmount = localStorage.getItem('lastAmount');
+            window.lastConverted = localStorage.getItem('lastConverted') || window.lastAmount > 0 ? window.lastAmount + window.to : "";
 
             // set options on select elements
             $(".from").val(window.from);
