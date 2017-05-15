@@ -86,11 +86,24 @@
               <option value="mi">mi (miles)</option>
               <option value="in">in (inches)</option>
               <option value="ft">ft (feet)</option>
+              <option value="yd">yd (yards)</option>
               <option value="nmi">nmi (nautical miles)</option>
               <option value="km">km (kilometres)</option>       
               <option value="m">m (metres)</option>
               <option value="cm">cm (centimetres)</option>
               <option value="mm">mm (milimetres)</option>
+          </optgroup>
+          <optgroup label="Area">
+              <option value="sqmi">sq mi (square miles)</option>
+              <option value="sqin">sq in (square inches)</option>
+              <option value="sqft">sq ft (square feet)</option>
+              <option value="sqyd">sq yd (square yards)</option>
+              <option value="sqkm">sq km (square kilometres)</option>       
+              <option value="sqm">sq m (square metres)</option>
+              <option value="sqcm">sq cm (square centimetres)</option>
+              <option value="ha">ha (hectares)</option>
+              <option value="ar">ar (ares)</option>
+              <option value="ac">ac (acres)</option>
           </optgroup>
       </select>     
       <h1>To</h1>
@@ -110,7 +123,20 @@
               <option value="mi">mi (miles)</option>
               <option value="in">in (inches)</option>
               <option value="ft">ft (feet)</option>
+              <option value="yd">yd (yards)</option>
               <option value="nmi">nmi (nautical miles)</option>
+          </optgroup>
+          <optgroup label="Area">
+              <option value="sqmi">sq mi (square miles)</option>
+              <option value="sqin">sq in (square inches)</option>
+              <option value="sqft">sq ft (square feet)</option>
+              <option value="sqyd">sq yd (square yards)</option>
+              <option value="sqkm">sq km (square kilometres)</option>       
+              <option value="sqm">sq m (square metres)</option>
+              <option value="sqcm">sq cm (square centimetres)</option>
+              <option value="ha">ha (hectares)</option>
+              <option value="ar">ar (ares)</option>
+              <option value="ac">ac (acres)</option>
           </optgroup>
       </select>
       <h1>Converted</h1>
@@ -142,6 +168,14 @@
             "in": "cm",
             "ft": "m",
             "m": "ft",
+            "sqft" : "sqm",
+            "sqmi" : "sqkm",
+            "sqm" : "sqft",
+            "sqkm" : "sqmi",
+            "sqin" : "sqcm",
+            "sqcm" : "sqin",
+            "ac" : "ha",
+            "ha" : "ac",
         }
 
         var lastClickedType = "inputamount";
@@ -168,7 +202,8 @@
                 // get vals
                 window.from = $($(".from")[0]).val();
                 window.to = $($(".to")[0]).val();
-                window.lastAmount = $($(".amount")[0]).val()
+                window.lastAmount = $($(".amount")[0]).val();
+
 
                 // do conversion
                 window.lastConverted = $u(window.lastAmount, window.from).as(window.to).val();
@@ -182,7 +217,10 @@
             }
 
             // convert on keyup and select change events
-            $(document).on("keyup", ".amount, .converted", function () { lastClickedType = "inputamount"; doConversion(); })
+            $(document).on("keyup", ".amount, .converted", function () { 
+                lastClickedType = "inputamount"; 
+                doConversion(); 
+            })
             $(document).on("change", ".unitselector", function () {                
                 if ($(this).hasClass("from"))
                 {

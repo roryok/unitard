@@ -7,10 +7,13 @@
             this.currentUnit = unit;
         }
     };
+    
     unitConverter.prototype.as = function (targetUnit) {
         this.targetUnit = targetUnit;
+        console.log(this);
         return this;
     };
+    
     unitConverter.prototype.is = function (currentUnit) {
         this.currentUnit = currentUnit;
         return this;
@@ -23,15 +26,17 @@
         if (target.base != current.base) {
             throw new Error('Incompatible units; cannot convert from "' + this.currentUnit + '" to "' + this.targetUnit + '"');
         }
-
         return this.value * (current.multiplier / target.multiplier);
     };
+
     unitConverter.prototype.toString = function () {
         return this.val() + ' ' + this.targetUnit;
     };
+    
     unitConverter.prototype.debug = function () {
         return this.value + ' ' + this.currentUnit + ' is ' + this.val() + ' ' + this.targetUnit;
     };
+    
     unitConverter.addUnit = function (baseUnit, actualUnit, multiplier) {
         table[actualUnit] = { base: baseUnit, actual: actualUnit, multiplier: multiplier };
     };
@@ -39,7 +44,7 @@
     var prefixes = ['Y', 'Z', 'E', 'P', 'T', 'G', 'M', 'k', 'h', 'da', '', 'd', 'c', 'm', 'u', 'n', 'p', 'f', 'a', 'z', 'y'];
     var factors = [24, 21, 18, 15, 12, 9, 6, 3, 2, 1, 0, -1, -2, -3, -6, -9, -12, -15, -18, -21, -24];
     // SI units only, that follow the mg/kg/dg/cg type of format
-    var units = ['g', 'b', 'l', 'm'];
+    var units = ['g', 'b', 'l', 'm', 'sqkm', 'sqm', 'sqcm'];
 
     for (var j = 0; j < units.length; j++) {
         var base = units[j];
@@ -68,6 +73,18 @@
     // adding in some more 
 	unitConverter.addUnit('m', 'mi', 1609);
 	unitConverter.addUnit('m', 'nmi', 1852);
+	unitConverter.addUnit('sqkm', 'sqmi', 0.386102158542);
+	unitConverter.addUnit('sqm', 'sqft', 0.09290304);
+	unitConverter.addUnit('sqm', 'sqyd', 0.836127);
+	unitConverter.addUnit('sqcm', 'sqin', 6.4516);
+	unitConverter.addUnit('sqm', 'ac', 4046.86);
+	unitConverter.addUnit('sqm', 'ar', 100);
+    unitConverter.addUnit('sqm', 'ha', 10000);
+	// unitConverter.addUnit('sqkm', 'sqmi', 0.386102158542);
+	// unitConverter.addUnit('sqkm', 'sqmi', 0.386102158542);
+	// unitConverter.addUnit('sqkm', 'sqmi', 0.386102158542);
+
+    console.log(table)
 
     window.$u = function (value, unit) {
         var u = new window.unitConverter(value, unit);
